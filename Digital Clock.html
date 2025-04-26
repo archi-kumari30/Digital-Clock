@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Elegant Digital Clock</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #2c3e50, #4ca1af); /* Navy Blue Gradient */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+    }
+
+    .clock {
+      font-size: 70px;
+      font-weight: bold;
+      letter-spacing: 5px;
+      background: #1c1c1c; /* Almost black */
+      color: #00bcd4; /* Light Blue Text */
+      padding: 25px 60px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+      margin-bottom: 25px;
+      text-align: center;
+      border: 2px solid #00bcd4;
+    }
+
+    .date {
+      font-size: 26px;
+      background: #333333; /* Dark Grey */
+      color: #d1d1d1; /* Light Grey Text */
+      padding: 15px 40px;
+      border-radius: 15px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      line-height: 1.6;
+      border: 2px solid #d1d1d1;
+    }
+
+    #fullDate {
+      color: #d1d1d1; /* Light Grey Date */
+      font-weight: 600;
+    }
+
+    #dayName {
+      color: #00bcd4; /* Light Blue Day */
+      font-weight: bold;
+      font-size: 30px;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="clock" id="clock">00 : 00 : 00 AM</div>
+<div class="date" id="date">
+  <div id="fullDate">01 January 2025</div>
+  <div id="dayName">Monday</div>
+</div>
+
+<script>
+  function updateClock() {
+    const now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    let seconds = now.getSeconds();
+    let ampm = hours >= 12 ? 'PM' : 'AM';
+
+    // Convert to 12-hour format
+    hours = hours % 12;
+    hours = hours ? hours : 12; // '0' hours should be '12'
+
+    // Add leading zeros
+    hours = hours < 10 ? "0" + hours : hours;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    const currentTime = `${hours} : ${minutes} : ${seconds} ${ampm}`;
+    document.getElementById('clock').textContent = currentTime;
+
+    // Day and Date
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = ['January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'];
+
+    const dayName = days[now.getDay()];
+    const monthName = months[now.getMonth()];
+    const day = now.getDate() < 10 ? "0" + now.getDate() : now.getDate();
+    const year = now.getFullYear();
+
+    document.getElementById('fullDate').textContent = `${day} ${monthName} ${year}`;
+    document.getElementById('dayName').textContent = dayName;
+  }
+
+  setInterval(updateClock, 1000);
+  updateClock();
+</script>
+
+</body>
+</html>
